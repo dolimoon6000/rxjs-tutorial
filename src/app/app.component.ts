@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 
 @Component({
@@ -12,7 +12,7 @@ export class AppComponent {
   mySubject$;
 
   ngOnInit() {
-    this.mySubject$ = new BehaviorSubject(200);
+    this.mySubject$ = new ReplaySubject();
     this.mySubject$.subscribe(x => console.log('first subscribe', x));
     this.mySubject$.next(1);
     this.mySubject$.next(2);
