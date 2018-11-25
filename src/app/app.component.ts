@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { interval } from 'rxjs';
-import { map, take } from 'rxjs/internal/operators';
+import { map, take, filter } from 'rxjs/internal/operators';
 
 
 @Component({
@@ -18,6 +18,7 @@ export class AppComponent {
     numbers$
       .pipe(take(5))
       .pipe(map(x => x * 10))
+      .pipe(filter(x => x > 20))
       .subscribe(x => console.log(x));
   }
 
