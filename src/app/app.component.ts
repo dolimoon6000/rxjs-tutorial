@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { interval } from 'rxjs';
-import { map, take, filter } from 'rxjs/internal/operators';
+import { interval, of } from 'rxjs';
+import { map, take, mergeMap } from 'rxjs/internal/operators';
 
 
 @Component({
@@ -14,12 +14,11 @@ export class AppComponent {
 
   ngOnInit() {
     const numbers$ = interval(1000);
+    const letters$ = of('a', 'b', 'c', 'd', 'e');
 
-    numbers$
-      .pipe(take(5))
-      .pipe(map(x => x * 10))
-      .pipe(filter(x => x > 20))
-      .subscribe(x => console.log(x));
+    letters$.pipe(mergeMap(x =>
+      numbers$.pipe(take(5)).pipe(map(i => i + x))
+    )).subscribe(x => console.log(x));
   }
 
   ngOnDestroy() {
