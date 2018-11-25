@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { interval } from 'rxjs';
+import { take } from 'rxjs/internal/operators';
 
 
 @Component({
@@ -12,13 +13,8 @@ export class AppComponent {
   mySubject$;
 
   ngOnInit() {
-    this.mySubject$ = new ReplaySubject();
-    this.mySubject$.subscribe(x => console.log('first subscribe', x));
-    this.mySubject$.next(1);
-    this.mySubject$.next(2);
-    // this.mySubject$.unsubscribe();
-    this.mySubject$.subscribe(x => console.log('second subscribe', x));
-    this.mySubject$.next(3);
+    const numbers$ = interval(1000).pipe(take(5));
+    numbers$.subscribe(x => console.log(x));
   }
 
   ngOnDestroy() {
